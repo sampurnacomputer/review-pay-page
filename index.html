@@ -1,0 +1,59 @@
+import qrcode
+from pathlib import Path
+
+# Customize your URLs
+google_review_url = "https://g.page/r/Cd7nZzW9hH2nEB0/review"
+upi_payment_url = "upi://pay?pa=yourupi@bank&pn=Your+Name&cu=INR"
+
+# HTML content
+html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Actions</title>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }}
+        .btn {{
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }}
+        .review {{
+            background-color: #4285F4;
+        }}
+        .payment {{
+            background-color: #34A853;
+        }}
+    </style>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <a href="{google_review_url}" class="btn review" target="_blank">Leave a Review</a>
+    <a href="{upi_payment_url}" class="btn payment">Make a Payment</a>
+</body>
+</html>
+"""
+
+# Save the HTML to a local file
+file_path = Path("landing_page.html")
+file_path.write_text(html_content)
+print(f"HTML saved to {file_path.resolve()}")
+
+# Generate QR code pointing to the local file path (or host this file online for public access)
+qr = qrcode.make(f"file://{file_path.resolve()}")
+qr_file_path = "landing_page_qr.png"
+qr.save(qr_file_path)
+print(f"QR code saved to {qr_file_path}")
